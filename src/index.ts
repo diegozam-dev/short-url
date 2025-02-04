@@ -1,4 +1,5 @@
 import express from 'express';
+import { PORT } from './config';
 
 const app = express();
 app.disable('x-powered-by');
@@ -7,7 +8,6 @@ app.get('/', (_, res) => {
   res.send('Hello World!');
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`);
 });

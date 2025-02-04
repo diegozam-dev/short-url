@@ -1,0 +1,11 @@
+{
+  "name": "short-url",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch src/index.js"
+  },
+  "author": "Diego Zambrano",
+  "license": "MIT"
+}

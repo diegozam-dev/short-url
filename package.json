@@ -2,10 +2,24 @@
   "name": "short-url",
   "version": "1.0.0",
   "description": "",
+  "keywords": [],
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch src/index.js"
+    "dev": "tsx watch src/index.ts",
+    "start": "node --watch dist/index.js",
+    "build": "npx tsc"
   },
   "author": "Diego Zambrano",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
 }

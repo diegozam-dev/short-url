@@ -1,3 +1,7 @@
 import 'dotenv/config';
 
-export const { PORT = 3000 } = process.env;
+export const {
+  PORT = 3000,
+  TURSO_DATABASE_URL,
+  TURSO_AUTH_TOKEN
+} = process.env;

@@ -23,6 +23,22 @@ class UrlShortenedController {
       console.trace(error);
     }
   };
+
+  public decodeUrl = async (req: Request, res: Response) => {
+    const { codeStr } = req.params;
+
+    try {
+      const { rows } = await this.urlShortenedService.decodeUrl(codeStr);
+
+      res.status(200).json({
+        response: 'OK',
+        message: 'Url decoded correct.',
+        data: { originalUrl: rows[0].original_url }
+      });
+    } catch (error) {
+      console.trace(error);
+    }
+  };
 }
 
 export default UrlShortenedController;

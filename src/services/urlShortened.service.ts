@@ -30,6 +30,18 @@ class UrlShortenedService {
 
     return await this.urlShortenedModel.getById(lastInsertRowId);
   };
+
+  public decodeUrl = async (codeStr: string) => {
+    console.log(`Code String: ${codeStr}`);
+
+    let id = 0;
+    for (var i = 0; i < codeStr.length; i++) {
+      id = id * this.BASE + this.ALPHABET.indexOf(codeStr.charAt(i));
+    }
+    console.log(`Id: ${id}`);
+
+    return await this.urlShortenedModel.getById(id);
+  };
 }
 
 export default UrlShortenedService;

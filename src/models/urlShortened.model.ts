@@ -19,10 +19,10 @@ class UrlShortenedModel {
     return result;
   };
 
-  public update = async (id: number, shortCode: string, shortUrl: string) => {
+  public update = async (id: number, codeStr: string, shortUrl: string) => {
     const result = await db.execute({
-      sql: 'UPDATE urls SET code = ?, short_url = ? WHERE id = ?',
-      args: [shortCode, shortUrl, id]
+      sql: 'UPDATE urls SET code_str = ?, short_url = ? WHERE id = ?',
+      args: [codeStr, shortUrl, id]
     });
 
     return result;

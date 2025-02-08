@@ -16,17 +16,17 @@ class UrlShortenedService {
 
     const lastInsertRowId = Number(createdResult.lastInsertRowid);
 
-    let shortCode = '';
+    let codeStr = '';
     let rowId = lastInsertRowId;
 
     while (rowId > 0) {
-      shortCode = this.ALPHABET.charAt(rowId % this.BASE) + shortCode;
+      codeStr = this.ALPHABET.charAt(rowId % this.BASE) + codeStr;
       rowId = Math.floor(rowId / this.BASE);
     }
 
-    const shortUrl = `https://shorty.com/${shortCode}`;
+    const shortUrl = `https://shorty.com/${codeStr}`;
 
-    await this.urlShortenedModel.update(lastInsertRowId, shortCode, shortUrl);
+    await this.urlShortenedModel.update(lastInsertRowId, codeStr, shortUrl);
 
     return await this.urlShortenedModel.getById(lastInsertRowId);
   };

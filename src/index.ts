@@ -20,7 +20,7 @@ app.get('/', (_req, res) => {
   await db.batch(
     [
       'DROP TABLE IF EXISTS urls',
-      'CREATE TABLE IF NOT EXISTS urls (id INTEGER PRIMARY KEY AUTOINCREMENT, original_url TEXT NOT NULL UNIQUE, code TEXT UNIQUE, short_url TEXT UNIQUE)'
+      'CREATE TABLE IF NOT EXISTS urls (id INTEGER PRIMARY KEY AUTOINCREMENT, original_url TEXT NOT NULL UNIQUE, code_str TEXT UNIQUE, short_url TEXT UNIQUE)'
     ],
     'write'
   );

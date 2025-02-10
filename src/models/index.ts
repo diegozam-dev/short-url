@@ -1,3 +1,3 @@
-import UrlShortenedModel from './urlShortened.model';
+import UrlModel from './url.model';
 
-export { UrlShortenedModel };
+export { UrlModel };

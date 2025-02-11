@@ -1,4 +1,4 @@
-import { ShortenedUrlModel } from '../models/index';
+import ShortenedUrlModel from '../models/shortenedUrl.model';
 import { BASE_URL } from '../config';
 
 class ShortenedUrlService {

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ShortenedUrlService } from '../services/index';
+import ShortenedUrlService from '../services/shortenedUrl.service';
 
 class ShortenedUrlController {
   private shortenedUrlService: ShortenedUrlService;

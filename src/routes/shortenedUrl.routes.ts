@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ShortenedUrlController } from '../controllers/index';
+import ShortenedUrlController from '../controllers/shortenedUrl.controller';
 
 const shortenedUrlController = new ShortenedUrlController();
 const shortenedUrlRouter = Router();

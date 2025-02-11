@@ -1,6 +1,6 @@
 import { db } from '../db/connection';
 
-class UrlModel {
+class ShortenedUrlModel {
   public getById = async (id: number) => {
     const result = await db.execute({
       sql: 'SELECT * FROM urls WHERE id = ?',
@@ -29,4 +29,4 @@ class UrlModel {
   };
 }
 
-export default UrlModel;
+export default ShortenedUrlModel;

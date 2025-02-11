@@ -1,28 +1,28 @@
-import { UrlModel } from '../models/index';
+import { ShortenedUrlModel } from '../models/index';
 import { BASE_URL } from '../config';
 
-class UrlService {
-  private urlModel: UrlModel;
+class ShortenedUrlService {
+  private shortenedUrlModel: ShortenedUrlModel;
   private readonly ALPHABET: string;
   private readonly ENCODE_BASE: number;
 
   constructor() {
-    this.urlModel = new UrlModel();
+    this.shortenedUrlModel = new ShortenedUrlModel();
     this.ALPHABET = '23456789bcdfghjkmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ-_';
     this.ENCODE_BASE = this.ALPHABET.length;
   }
 
   public encodeUrl = async (url: string) => {
-    const { lastInsertRowid } = await this.urlModel.create(url);
+    const { lastInsertRowid } = await this.shortenedUrlModel.create(url);
     const rowId = Number(lastInsertRowid);
 
     const codeStr = this.getCodeStr(rowId);
     const checkSumValue = this.getCheckSum(rowId);
     const shortUrl = `${BASE_URL}/${checkSumValue + codeStr}`;
 
-    await this.urlModel.update(rowId, codeStr, shortUrl);
+    await this.shortenedUrlModel.update(rowId, codeStr, shortUrl);
 
-    return await this.urlModel.getById(rowId);
+    return await this.shortenedUrlModel.getById(rowId);
   };
 
   public decodeUrl = async (codeStr: string) => {
@@ -31,7 +31,7 @@ class UrlService {
     const encodeId = codeStr.substring(2);
     const id = this.decodeId(encodeId);
 
-    return await this.urlModel.getById(id);
+    return await this.shortenedUrlModel.getById(id);
   };
 
   private decodeId = (encodedId: string) => {
@@ -71,4 +71,4 @@ class UrlService {
   };
 }
 
-export default UrlService;
+export default ShortenedUrlService;

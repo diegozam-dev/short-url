@@ -1,11 +1,11 @@
 import { Request, Response, Router } from 'express';
-import urlRouter from './url.routes';
+import shortenedUrlRouter from './shortenedUrl.routes';
 import { BASE_URL } from '../config';
 
 const apiRouter = Router();
 const router = Router();
 
-apiRouter.use('/url', urlRouter);
+apiRouter.use('/url', shortenedUrlRouter);
 
 router.use('/v1/api', apiRouter);
 router.use('/:codeStr', (req: Request, res: Response) => {

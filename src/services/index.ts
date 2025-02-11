@@ -1,3 +1,3 @@
-import UrlService from './url.service';
+import ShortenedUrlService from './shortenedUrl.service';
 
-export { UrlService };
+export { ShortenedUrlService };

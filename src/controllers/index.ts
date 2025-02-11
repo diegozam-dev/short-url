@@ -1,3 +1,3 @@
-import UrlController from './url.controller';
+import ShortenedUrlController from './shortenedUrl.controller';
 
-export { UrlController };
+export { ShortenedUrlController };

@@ -1,18 +1,18 @@
 import { Request, Response } from 'express';
-import { UrlService } from '../services/index';
+import { ShortenedUrlService } from '../services/index';
 
-class UrlController {
-  private urlService: UrlService;
+class ShortenedUrlController {
+  private shortenedUrlService: ShortenedUrlService;
 
   constructor() {
-    this.urlService = new UrlService();
+    this.shortenedUrlService = new ShortenedUrlService();
   }
 
   public encodeUrl = async (req: Request, res: Response) => {
     const { url } = req.body;
 
     try {
-      const { rows } = await this.urlService.encodeUrl(url);
+      const { rows } = await this.shortenedUrlService.encodeUrl(url);
 
       res.status(200).json({
         response: 'OK',
@@ -28,7 +28,7 @@ class UrlController {
     const { codeStr } = req.params;
 
     try {
-      const { rows } = await this.urlService.decodeUrl(codeStr);
+      const { rows } = await this.shortenedUrlService.decodeUrl(codeStr);
 
       res.redirect(301, `${rows[0].original_url}`);
     } catch (error) {
@@ -37,4 +37,4 @@ class UrlController {
   };
 }
 
-export default UrlController;
+export default ShortenedUrlController;

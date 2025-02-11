@@ -4,11 +4,11 @@ import { ShortenedUrlController } from '../controllers/index';
 const shortenedUrlController = new ShortenedUrlController();
 const shortenedUrlRouter = Router();
 
-shortenedUrlRouter.post('/encode', shortenedUrlController.encodeUrl);
-shortenedUrlRouter.post('/decode/', shortenedUrlController.decodeUrl);
+shortenedUrlRouter.post('/encode', shortenedUrlController.shortenUrl);
+shortenedUrlRouter.post('/decode/', shortenedUrlController.getOriginalUrl);
 shortenedUrlRouter.get(
-  '/decode/:codeStr',
-  shortenedUrlController.decodeUrlAndRedirect
+  '/decode/:code',
+  shortenedUrlController.getOriginalUrlAndRedirect
 );
 
 export default shortenedUrlRouter;

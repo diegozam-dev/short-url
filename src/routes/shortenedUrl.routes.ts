@@ -5,6 +5,10 @@ const shortenedUrlController = new ShortenedUrlController();
 const shortenedUrlRouter = Router();
 
 shortenedUrlRouter.post('/encode', shortenedUrlController.encodeUrl);
-shortenedUrlRouter.get('/decode/:codeStr', shortenedUrlController.decodeUrl);
+shortenedUrlRouter.post('/decode/', shortenedUrlController.decodeUrl);
+shortenedUrlRouter.get(
+  '/decode/:codeStr',
+  shortenedUrlController.decodeUrlAndRedirect
+);
 
 export default shortenedUrlRouter;

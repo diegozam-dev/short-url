@@ -12,26 +12,27 @@ class ShortenedUrlService {
     this.ENCODE_BASE = this.ALPHABET.length;
   }
 
-  public encodeUrl = async (url: string) => {
+  public shortenUrl = async (url: string) => {
     const { lastInsertRowid } = await this.shortenedUrlModel.create(url);
     const rowId = Number(lastInsertRowid);
 
-    const codeStr = this.getCodeStr(rowId);
-    const checkSumValue = this.getCheckSum(rowId);
-    const shortUrl = `${BASE_URL}/${checkSumValue + codeStr}`;
+    const shortUrl = this.getShortenedUrl(rowId);
 
-    await this.shortenedUrlModel.update(rowId, codeStr, shortUrl);
+    await this.shortenedUrlModel.update(rowId, shortUrl);
+    const { rows } = await this.shortenedUrlModel.getById(rowId);
 
-    return await this.shortenedUrlModel.getById(rowId);
+    return rows[0].shortened_url;
   };
 
-  public decodeUrl = async (codeStr: string) => {
-    if (!this.validateCheckSum(codeStr)) throw new Error('Invalid url.');
+  public getOriginalUrl = async (code: string) => {
+    if (!this.validateCheckSum(code)) throw new Error('Invalid url.');
 
-    const encodeId = codeStr.substring(2);
-    const id = this.decodeId(encodeId);
+    const encodedId = code.substring(2);
+    const id = this.decodeId(encodedId);
 
-    return await this.shortenedUrlModel.getById(id);
+    const { rows } = await this.shortenedUrlModel.getById(id);
+
+    return rows[0].original_url;
   };
 
   private decodeId = (encodedId: string) => {
@@ -43,13 +44,13 @@ class ShortenedUrlService {
     return id;
   };
 
-  private getCodeStr = (rowId: number) => {
-    let id = rowId;
+  private encodeId = (id: number) => {
+    let currentId = id;
     let codeStr = '';
 
-    while (id > 0) {
-      codeStr = this.ALPHABET.charAt(id % this.ENCODE_BASE) + codeStr;
-      id = Math.floor(id / this.ENCODE_BASE);
+    while (currentId > 0) {
+      codeStr = this.ALPHABET.charAt(currentId % this.ENCODE_BASE) + codeStr;
+      currentId = Math.floor(currentId / this.ENCODE_BASE);
     }
 
     return codeStr;
@@ -59,12 +60,20 @@ class ShortenedUrlService {
     const checkSumValue =
       (id * 17 + 31) % (this.ENCODE_BASE * this.ENCODE_BASE);
 
-    return this.getCodeStr(checkSumValue).padStart(2, this.ALPHABET.charAt(0));
+    return this.encodeId(checkSumValue).padStart(2, this.ALPHABET.charAt(0));
   };
 
-  private validateCheckSum = (codeStr: string) => {
-    const checkSumValue = codeStr.substring(0, 2);
-    const encodedId = codeStr.substring(2);
+  private getShortenedUrl(id: number) {
+    const codeStr = this.encodeId(id);
+    const checkSumValue = this.getCheckSum(id);
+    const shortenedUrl = `${BASE_URL}/${checkSumValue + codeStr}`;
+
+    return shortenedUrl;
+  }
+
+  private validateCheckSum = (code: string) => {
+    const checkSumValue = code.substring(0, 2);
+    const encodedId = code.substring(2);
     const id = this.decodeId(encodedId);
 
     return this.getCheckSum(id) === checkSumValue;

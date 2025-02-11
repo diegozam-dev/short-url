@@ -3,7 +3,7 @@ import { db } from '../db/connection';
 class ShortenedUrlModel {
   public getById = async (id: number) => {
     const result = await db.execute({
-      sql: 'SELECT * FROM urls WHERE id = ?',
+      sql: 'SELECT * FROM shortened_urls WHERE id = ?',
       args: [id]
     });
 
@@ -12,17 +12,17 @@ class ShortenedUrlModel {
 
   public create = async (url: string) => {
     const result = await db.execute({
-      sql: 'INSERT INTO urls (original_url) VALUES (?)',
+      sql: 'INSERT INTO shortened_urls (original_url) VALUES (?)',
       args: [url]
     });
 
     return result;
   };
 
-  public update = async (id: number, codeStr: string, shortUrl: string) => {
+  public update = async (id: number, shortenedUrl: string) => {
     const result = await db.execute({
-      sql: 'UPDATE urls SET code_str = ?, short_url = ? WHERE id = ?',
-      args: [codeStr, shortUrl, id]
+      sql: 'UPDATE shortened_urls SET shortened_url = ? WHERE id = ?',
+      args: [shortenedUrl, id]
     });
 
     return result;

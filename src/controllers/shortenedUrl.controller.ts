@@ -8,44 +8,44 @@ class ShortenedUrlController {
     this.shortenedUrlService = new ShortenedUrlService();
   }
 
-  public encodeUrl = async (req: Request, res: Response) => {
+  public shortenUrl = async (req: Request, res: Response) => {
     const { url } = req.body;
 
     try {
-      const { rows } = await this.shortenedUrlService.encodeUrl(url);
+      const shortenedUrl = await this.shortenedUrlService.shortenUrl(url);
 
       res.status(200).json({
         response: 'OK',
         message: 'Url shorted correct.',
-        data: { shortUrl: rows[0].short_url }
+        data: { shortenedUrl }
       });
     } catch (error) {
       console.trace(error);
     }
   };
 
-  public decodeUrlAndRedirect = async (req: Request, res: Response) => {
-    const { codeStr } = req.params;
+  public getOriginalUrlAndRedirect = async (req: Request, res: Response) => {
+    const { code } = req.params;
 
     try {
-      const { rows } = await this.shortenedUrlService.decodeUrl(codeStr);
+      const originalUrl = await this.shortenedUrlService.getOriginalUrl(code);
 
-      res.redirect(301, `${rows[0].original_url}`);
+      res.redirect(301, originalUrl as string);
     } catch (error) {
       console.trace(error);
     }
   };
 
-  public decodeUrl = async (req: Request, res: Response) => {
+  public getOriginalUrl = async (req: Request, res: Response) => {
     const { url } = req.body;
-    const codeStr = new URL(url).pathname.substring(1);
+    const code = new URL(url).pathname.substring(1);
 
     try {
-      const { rows } = await this.shortenedUrlService.decodeUrl(codeStr);
+      const originalUrl = await this.shortenedUrlService.getOriginalUrl(code);
       res.status(200).json({
         response: 'OK',
         message: 'Url decoded correct.',
-        data: { originalUrl: rows[0].original_url }
+        data: { originalUrl }
       });
     } catch (error) {
       console.trace(error);

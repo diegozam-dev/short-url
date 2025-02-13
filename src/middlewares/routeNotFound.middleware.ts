@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
+import ErrorEnum from '../utils/errorEnum';
 
 const routeNotFound = (req: Request, res: Response) => {
   res.status(404).json({
-    response: 'ERR_NOT_FOUND',
+    response: ErrorEnum.NotFound,
     message: `Cannot ${req.method} ${req.originalUrl}`
   });
 };

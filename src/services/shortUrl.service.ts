@@ -2,6 +2,7 @@ import ShortUrlModel from '../models/shortUrl.model';
 import { BASE_URL } from '../config';
 import CustomError from '../errors/customError.error';
 import { encodedIdWithCheckSum, decodeId } from '../utils/encodeAndDecodeId';
+import ErrorEnum from '../utils/errorEnum';
 
 class ShortUrlService {
   private shortUrlModel: ShortUrlModel;
@@ -33,10 +34,7 @@ class ShortUrlService {
   public getOriginalUrl = async (checkSumId: string) => {
     // Valida el checkSum
     if (!this.isValidCheckSumValue(checkSumId))
-      throw new CustomError({
-        code: 'ERR_INVALID_URL',
-        message: 'The url is invalid.'
-      });
+      throw new CustomError(ErrorEnum.InvalidUrl, 'The url is invalid.');
 
     const id = decodeId(checkSumId);
 
@@ -44,10 +42,7 @@ class ShortUrlService {
 
     // Si no hay registros la url no existe
     if (rows.length <= 0)
-      throw new CustomError({
-        code: 'ERR_URL_NOT_EXISTS',
-        message: 'The url does not exist.'
-      });
+      throw new CustomError(ErrorEnum.UrlNotExists, 'The url does not exist.');
 
     return rows[0].original_url;
   };

@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import urlPattern from '../utils/urlPattern';
+import ErrorEnum from '../utils/errorEnum';
 
 const validateUrl = (req: Request, res: Response, next: NextFunction) => {
   const { url } = req.body;
@@ -9,7 +10,7 @@ const validateUrl = (req: Request, res: Response, next: NextFunction) => {
 
   if (!validateResult) {
     res.status(400).json({
-      response: 'ERR_INVALID_URL',
+      response: ErrorEnum.InvalidUrl,
       message: 'The url is invalid.'
     });
   } else {

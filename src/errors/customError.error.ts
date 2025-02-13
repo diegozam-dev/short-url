@@ -1,9 +1,9 @@
+import ErrorEnum from '../utils/errorEnum';
+
 class CustomError extends Error {
-  private readonly _code: string;
+  private readonly _code: ErrorEnum;
 
-  constructor(params: { code: string; message: string }) {
-    const { code, message } = params;
-
+  constructor(code: ErrorEnum, message: string) {
     super(message);
     this._code = code;
 

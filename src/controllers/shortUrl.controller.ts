@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import ShortUrlService from '../services/shortUrl.service';
-import { isValidUrl } from '../utils/validateUrl';
-import CustomError from '../errors/customError.error';
 
 class ShortUrlController {
   private shortUrlService: ShortUrlService;
@@ -18,12 +16,6 @@ class ShortUrlController {
     const { url } = req.body;
 
     try {
-      if (!isValidUrl(url))
-        throw new CustomError({
-          code: 'ERR_INVALID_URL',
-          message: 'The url is invalid.'
-        });
-
       const shortUrl = await this.shortUrlService.createShortUrl(url);
 
       res.status(200).json({
@@ -32,7 +24,6 @@ class ShortUrlController {
         data: { shortUrl }
       });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   };

@@ -6,15 +6,13 @@ import { db } from './db/connection';
 
 const app = express();
 
+// Config
 app.use(json());
 app.use(cors());
 app.disable('x-powered-by');
 
+// Routes
 app.use(router);
-
-app.get('/', (_req, res) => {
-  res.send('Hello World!');
-});
 
 (async () => {
   await db.batch(

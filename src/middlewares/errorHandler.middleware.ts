@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import CustomError from '../errors/customError.error';
-import ErrorEnum from '../utils/errorEnum';
+import ErrorEnum from '../errors/errorEnum';
 
 const errorHandler = (
   err: CustomError,

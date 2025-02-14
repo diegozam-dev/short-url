@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import VirusTotalService from '../services/virusTotal.service';
-import ErrorEnum from '../utils/errorEnum';
+import ErrorEnum from '../errors/errorEnum';
 
 const scanUrl = async (req: Request, res: Response, next: NextFunction) => {
   const { url } = req.body;

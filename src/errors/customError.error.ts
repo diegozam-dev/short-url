@@ -1,4 +1,4 @@
-import ErrorEnum from '../utils/errorEnum';
+import ErrorEnum from './errorEnum';
 
 class CustomError extends Error {
   private readonly _code: ErrorEnum;

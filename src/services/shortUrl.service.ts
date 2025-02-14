@@ -1,8 +1,12 @@
 import ShortUrlModel from '../models/shortUrl.model';
 import { BASE_URL } from '../config';
 import CustomError from '../errors/customError.error';
-import { encodedIdWithCheckSum, decodeId } from '../utils/encodeAndDecodeId';
-import ErrorEnum from '../utils/errorEnum';
+import {
+  encodedIdWithCheckSum,
+  decodeIdWithCheckSum,
+  isValidCheckSum
+} from '../utils/index';
+import ErrorEnum from '../errors/errorEnum';
 
 class ShortUrlService {
   private shortUrlModel: ShortUrlModel;
@@ -33,10 +37,10 @@ class ShortUrlService {
 
   public getOriginalUrl = async (checkSumId: string) => {
     // Valida el checkSum
-    if (!this.isValidCheckSumValue(checkSumId))
+    if (!isValidCheckSum(checkSumId))
       throw new CustomError(ErrorEnum.InvalidUrl, 'The url is invalid.');
 
-    const id = decodeId(checkSumId);
+    const id = decodeIdWithCheckSum(checkSumId);
 
     const { rows } = await this.shortUrlModel.getById(id);
 
@@ -52,12 +56,6 @@ class ShortUrlService {
 
     return `${BASE_URL}/${checkSumId}`;
   }
-
-  private isValidCheckSumValue = (checkSumId: string) => {
-    const id = decodeId(checkSumId);
-
-    return encodedIdWithCheckSum(id) === checkSumId;
-  };
 }
 
 export default ShortUrlService;
